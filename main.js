@@ -38,7 +38,7 @@ function login () {
 		let ingresoNombre = prompt("Ingrese su nombre completo.");
 		let ingresoPassword = prompt("Ingrese su password.");
 
-		if (ingresoNombre.toUpperCase() === Usuario.nombre.toUpperCase() && ingresoPassword === Usuario.password) {
+		if (ingresoNombre == Usuario.nombre && ingresoPassword == Usuario.password) {
 			ingresar = true;
 			alert("¡Ingreso exitoso!");
 			break;
@@ -52,20 +52,20 @@ function login () {
 if(login()) {
 
 	class Producto {
- 		constructor (nombre, descripcion, precio, disponibilidad) {
+ 		constructor (nombre, descripcion, precio) {
  			this.nombre = nombre;
  			this.descripcion = descripcion;
  			this.precio = parseInt(precio);
- 			this.disponibilidad = disponibilidad;
+
  		}
 	}
 
 	const producto1 = new Producto("Aros 'Alas'", "Aros articulados de bronce, esmaltados.", 7500, "Disponible");
-	const producto2 = new Producto("Aros 'Drop'", "Modernos pendientes móviles de plata 925 y cobre. ", 6900, "No disponible");
-	const producto3 = new Producto("Collar 'Espirales'", "Collar hecho en plata 925. 32 cms de largo. Único. ", 22000, "Disponible");
-	const producto4 = new Producto("Collar 'Maggie'", "Elegante collar de plata 925 y cobre. Piedra de Sodalita. ", 27000, "Disponible");
-	const producto5 = new Producto("Anillo 'Paisaje'", "Anillo de plata esterlina. Para ocasiones especiales. ", 12000, "No disponible");
-	const producto6 = new Producto("Anillo 'Meridolas'", "Anillo de plata 925 y oro 18k. Imponente. Una pieza única. ", 74000, "Disponible");
+	const producto2 = new Producto("Aros 'Drop'", "Modernos pendientes móviles de plata 925 y cobre. ", 6900,);
+	const producto3 = new Producto("Collar 'Espirales'", "Collar hecho en plata 925. 32 cms de largo. Único. ", 22000,);
+	const producto4 = new Producto("Collar 'Maggie'", "Elegante collar de plata 925 y cobre. Piedra de Sodalita. ", 27000,);
+	const producto5 = new Producto("Anillo 'Paisaje'", "Anillo de plata esterlina. Para ocasiones especiales. ", 12000,);
+	const producto6 = new Producto("Anillo 'Meridolas'", "Anillo de plata 925 y oro 18k. Imponente. Una pieza única. ", 74000,);
 
 	const arrayAros = [producto1, producto2];
 	const arrayCollares = [producto3, producto4];
@@ -74,53 +74,71 @@ if(login()) {
 	const aros = "1";
 	const collares = "2";
 	const anillos = "3";
+	const salir = "4";
 
-	let variableOpciones = prompt("Ingrese la opción que desee comprar: \n 1 - Aros \n 2 - Collares \n 3 - Anillos");
+	function repetir {
+		continuar = true;
+		while(continuar) {
+
+			let variableOpciones = prompt("Ingrese la opción que desee comprar: \n1 - Aros \n2 - Collares \n3 - Anillos \n4- Salir");
+
+			if(variableOpciones === 4) {
+			continuar = false;
+			break;
+			}
+
+			switch(variableOpciones) {
+				case "1":
+					let opcionesAros = prompt(arrayAros + "\n\n Coloque el nombre del producto que desea comprar.")
+					if (opcionesAros == Producto.nombre) {
+						comprar ();
+					}
+					break;
+
+				case "2":
+					let opcionesCollares = prompt(arrayCollares + "\n\n Coloque el nombre del producto que desea comprar.")
+					if (opcionesCollares == Producto.nombre) {
+						comprar ();
+					}
+					break;
+
+				case "3":
+					let opcionesAnillos = prompt(arrayAnillos + "\n\n Coloque el nombre del producto que desea comprar.")
+					if (opcionesAnillos == Producto.nombre) {
+						comprar ();
+					}
+					break;
+
+				case "4":
+					continuar = false;
+					break;
+
+				default:
+					alert("CUMCUMCUM")
+			}
+		}
+	}
+
+	repetir();
+
+	function comprar(Producto){
+		let variableCantidad = parseInt(prompt("Ingrese la cantidad de productos que desea comprar: "));
+		let precioFinal = Producto.precio * variableCantidad;
+
+		alert("El precio de su compra es de: $" +precioFinal + ".");
+		alert("¡Muchas gracias por su compra!");
+
+		return precioFinal;
+
+	}
+
+	comprar ();
 
 
+
+
+//FIN IF LOGIN
 }else {
 	alert("Hubo un error en su login.\nRecargue la página para volver a intentarlo.")
 }
 
-
-
-let usuarioNuevo = prompt("Ingrese nombre de usuario: ");
-
-alert("¡Bienvenido " + usuarioNuevo + "!");
-
-const aros = "1";
-const collares = "2";
-const anillos = "3";
-const envioSi = "Si";
-const envioNo = "No";
-
-let variableOpciones = prompt("Ingrese la opción que desee comprar: \n 1 - Aros \n 2 - Collares \n 3 - Anillos")
-
-
-if (variableOpciones == aros || variableOpciones == collares || variableOpciones == anillos)
-{
-	let variableCantidad = parseInt(prompt("Ingrese cantidad de productos que desea comprar: "));
-	let variablePrecios = parseInt(prompt("Ingrese el precio del producto elegido (Sólo en números): \n Aros - $15000 \n Collares - $25000 \n Anillos - $8000" ));
-	
-	let metodoEnvio = prompt("¿Desea que le enviemos su compra? \n Si \n No");
-
-	while(metodoEnvio != envioNo) {
-			let telefonoContacto = prompt(usuarioNuevo + ", ingrese su número de celular, por favor:");
-			metodoEnvio = prompt("Ud. ingresó los siguientes datos: \n Número de teléfono: " + telefonoContacto + "\n ¿Sus datos son incorrectos?");
-		
-	}
-
-
-	let precioFinal = multiplicacion(variablePrecios, variableCantidad);
-	alert("El precio de su compra es de: $" +precioFinal + ".");
-	alert("¡Muchas gracias por su compra!");
-	
-
-}else {
-	alert("La opción ingresada no es válida.")
-}
-
-function multiplicacion (variablePrecios, variableCantidad) {
-			let precioFinal = variablePrecios * variableCantidad;
-			return precioFinal;
-		}
