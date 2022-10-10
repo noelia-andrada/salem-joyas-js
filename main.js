@@ -11,7 +11,7 @@ class Usuario {
 }
 
 const usuariosRegistrados = [
-	new Usuario("Martín González", "Casilda(Santa Fe)", "Calle Falsa 123", 346455555, "password123"),
+	new Usuario("Ema", "Casilda(Santa Fe)", "Calle Falsa 123", 346455555, "password123"),
 ];
 
 let continuar = true;
@@ -35,15 +35,20 @@ while (continuar) {
 function login () {
 	let ingresar = false;
 	for (let i = 2; i > 0; i--) {
-		let ingresoNombre = prompt("Ingrese su nombre completo.");
+		let ingresoNombre = prompt("Para realizar una compra: \nIngrese su nombre completo.");
 		let ingresoPassword = prompt("Ingrese su password.");
 
-		if (ingresoNombre == Usuario.nombre && ingresoPassword == Usuario.password) {
-			ingresar = true;
-			alert("¡Ingreso exitoso!");
-			break;
-		}else {
-			alert("Alguno de los datos ingresados fueron incorrectos. Le quedan " + i + " intentos.")
+		const usuarioRegistrado = usuariosRegistrados.find((usuario) => usuario.nombre === ingresoNombre,);
+
+		if (usuarioRegistrado) {
+
+			if (usuarioRegistrado.nombre === ingresoNombre && usuarioRegistrado.password === ingresoPassword) {
+				ingresar = true;
+				alert("¡Ingreso exitoso!");
+				break;
+			}else {
+				alert("Alguno de los datos ingresados fueron incorrectos. Le quedan " + i + " intentos.")
+			}
 		}
 	}
 	return ingresar;
@@ -51,89 +56,82 @@ function login () {
 
 if(login()) {
 
-	class Producto {
- 		constructor (nombre, descripcion, precio) {
- 			this.nombre = nombre;
- 			this.descripcion = descripcion;
- 			this.precio = parseInt(precio);
 
- 		}
+	class Producto {
+	 	constructor (nombre, descripcion, precio, id) {
+	 		this.nombre = nombre;
+	 		this.descripcion = descripcion;
+	 		this.precio = parseInt(precio);
+	 		this.id = parseInt(id);
+
+	 	}
 	}
 
-	const producto1 = new Producto("Aros 'Alas'", "Aros articulados de bronce, esmaltados.", 7500, "Disponible");
-	const producto2 = new Producto("Aros 'Drop'", "Modernos pendientes móviles de plata 925 y cobre. ", 6900,);
-	const producto3 = new Producto("Collar 'Espirales'", "Collar hecho en plata 925. 32 cms de largo. Único. ", 22000,);
-	const producto4 = new Producto("Collar 'Maggie'", "Elegante collar de plata 925 y cobre. Piedra de Sodalita. ", 27000,);
-	const producto5 = new Producto("Anillo 'Paisaje'", "Anillo de plata esterlina. Para ocasiones especiales. ", 12000,);
-	const producto6 = new Producto("Anillo 'Meridolas'", "Anillo de plata 925 y oro 18k. Imponente. Una pieza única. ", 74000,);
+	const producto1 = [
+		new Producto("Aros 'Alas'", "Aros articulados de bronce, esmaltados.", 7500, 1),
+		new Producto("Aros 'Drop'", "Modernos pendientes móviles de plata 925 y cobre.", 6900, 2),
+		new Producto("Collar 'Espirales'", "Collar hecho en plata 925. 32 cms de largo. Único.", 22000, 3),
+		new Producto("Collar 'Maggie'", "Elegante collar de plata 925 y cobre. Piedra de Sodalita.", 27000, 4),
+		new Producto("Anillo 'Paisaje'", "Anillo de plata esterlina. Para ocasiones especiales.", 12000, 5),
+		new Producto("Anillo 'Meridolas'", "Anillo de plata 925 y oro 18k. Imponente. Una pieza única.", 74000, 6),
+	];
 
-	const arrayAros = [producto1, producto2];
-	const arrayCollares = [producto3, producto4];
-	const arrayAnillos = [producto5, producto6];
+	const siComprar = "si";
+	const noComprar = "no";
+	const atras = "atras";
+	const salir = "salir";
 
-	const aros = "1";
-	const collares = "2";
-	const anillos = "3";
-	const salir = "4";
-
-	function repetir {
+	function repetir (Producto){
 		continuar = true;
+
 		while(continuar) {
 
-			let variableOpciones = prompt("Ingrese la opción que desee comprar: \n1 - Aros \n2 - Collares \n3 - Anillos \n4- Salir");
+			let variableOpciones = prompt("Dentro de las siguientes opciones, escribí el producto que estas buscando: \n1 - Aros \n2 - Collar \n3 - Anillo");
+			const filtrado = producto1.filter((producto) => producto.nombre.toLowerCase().includes(variableOpciones.toLowerCase()));
 
-			if(variableOpciones === 4) {
-			continuar = false;
-			break;
-			}
+			if (filtrado.length == 0) {
+				alert("No se encontraron productos.");
 
-			switch(variableOpciones) {
-				case "1":
-					let opcionesAros = prompt(arrayAros + "\n\n Coloque el nombre del producto que desea comprar.")
-					if (opcionesAros == Producto.nombre) {
-						comprar ();
-					}
-					break;
+			}else {
+				const busquedaProductos = filtrado.map ((producto) => producto.nombre);
+				let resultadoBusqueda = prompt("Los productos que coinciden con esta búsqueda son: \n-" + busquedaProductos.join("\n-") + "\n\n¿Desea agregar algún producto al carrito? \n- Si \n- No \n- Atrás");
 
-				case "2":
-					let opcionesCollares = prompt(arrayCollares + "\n\n Coloque el nombre del producto que desea comprar.")
-					if (opcionesCollares == Producto.nombre) {
-						comprar ();
-					}
-					break;
+				if (resultadoBusqueda.toLowerCase() == "si"){
+					let productoElegido = prompt("Ingrese el nombre de su producto:\n-" + busquedaProductos.join("\n-"));
+					let variableCantidad = parseInt(prompt("Ingrese la cantidad de productos que desea comprar: "));	
 
-				case "3":
-					let opcionesAnillos = prompt(arrayAnillos + "\n\n Coloque el nombre del producto que desea comprar.")
-					if (opcionesAnillos == Producto.nombre) {
-						comprar ();
-					}
-					break;
-
-				case "4":
+				}else if(resultadoBusqueda.toLowerCase() == "no"){
+					alert("¡Lo esperamos nuevamente!")
 					continuar = false;
 					break;
+				}else if (resultadoBusqueda.toLowerCase() == "atras"){
+					continuar = true;
+				}
 
-				default:
-					alert("CUMCUMCUM")
 			}
+
 		}
+			//FIN WHILE
 	}
+	//FIN Function Repetir
 
 	repetir();
 
-	function comprar(Producto){
-		let variableCantidad = parseInt(prompt("Ingrese la cantidad de productos que desea comprar: "));
-		let precioFinal = Producto.precio * variableCantidad;
 
-		alert("El precio de su compra es de: $" +precioFinal + ".");
-		alert("¡Muchas gracias por su compra!");
+	if (ingresoAFuncion == true){ 
+		function comprar(repetir, Producto){
+			let productoElegido = prompt("Ingrese el nombre de su producto:" + busquedaProductos.join("\n-"));
+			let variableCantidad = parseInt(prompt("Ingrese la cantidad de productos que desea comprar: "));
+			let precioFinal = Producto.precio * variableCantidad;
 
-		return precioFinal;
+			alert("El precio de su compra es de: $" +precioFinal + ".");
+			alert("¡Muchas gracias por su compra!");
 
+			return precioFinal;
+		}
 	}
 
 	comprar ();
-
 
 
 
